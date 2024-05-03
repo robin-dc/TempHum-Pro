@@ -2,13 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Dashboard() {
+export default function Dashboard({ darkMode, toggleDarkMode }) {
 
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>TempHum Pro</Text>
-      <Text style={styles.p}>Take care of your day by checking our Temperature and Humidity App</Text>
+    <View style={[styles.container, { backgroundColor: darkMode ? '#1d1d1f' : '#fff' }]}>
+
+      <Text style={[styles.title, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>TempHum Pro</Text>
+      <Text  style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of your day by checking our Temperature and Humidity App</Text>
         <View style={styles.wrapper}>
             <LinearGradient
                 colors={['#0FE687', '#1ABBD5']} // Gradient colors for the button
