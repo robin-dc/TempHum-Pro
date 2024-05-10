@@ -58,7 +58,7 @@ function HomeScreen({ navigation, darkMode, toggleDarkMode }) {
         style={styles.image}
       />
 
-      <Text style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of youdjasjkdakdr day by checking our Temperature and Humidity App</Text>
+      <Text style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of your day by checking our Temperature and Humidity App</Text>
       <TouchableOpacity onPress={handlePress}>
         <LinearGradient
           colors={['#0FE687', '#1ABBD5']}
