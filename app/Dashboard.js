@@ -8,6 +8,9 @@ import GradientText from './components/GradientText';
 
 export default function Dashboard({ darkMode, toggleDarkMode }) {
   const [data, setData] = useState({})
+  const [tempText, setTempText] = useState("normal")
+  const [humText, setHumText] = useState("normal")
+
 
   useEffect(()=> {
     const starCountRef = ref(db, 'sensor_data')
@@ -15,7 +18,15 @@ export default function Dashboard({ darkMode, toggleDarkMode }) {
       const data = snapshot.val();
       setData(data)
     })
+
+    if(Number(data?.temperature) > 38){
+      setTempText("high")
+    }
+    if(Number(data?.humidity) > 70){
+      setHumText("high")
+    }
   }, [])
+
 
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? '#1d1d1f' : '#fff' }]}>
@@ -35,7 +46,7 @@ export default function Dashboard({ darkMode, toggleDarkMode }) {
                 <View>
                     <Text style={styles.subtitle}>Temperature</Text>
                     <Text style={styles.temp}>{data?.temperature}°C</Text>
-                    <Text style={styles.subtext}>The recorded temperature is within normal range. Have a great day!</Text>
+                    <Text style={styles.subtext}>The recorded temperature is within {tempText} range. Have a great day!</Text>
                 </View>
                 <Image
                     source={require('../assets/sunCloud.png')}
@@ -51,7 +62,7 @@ export default function Dashboard({ darkMode, toggleDarkMode }) {
                 <View>
                 <Text style={styles.subtitle}>Humidity</Text>
                     <Text style={styles.temp}>{data?.humidity}%</Text>
-                    <Text style={styles.subtext}>The recorded humidity is within normal range. Have a great day!</Text>
+                    <Text style={styles.subtext}>The recorded humidity is within {humText} range. Have a great day!</Text>
                 </View>
                 <Image
                     source={require('../assets/cloudy.png')}
