@@ -3,8 +3,12 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import DashboardScreen from './app/Dashboard'; // Import your DashboardScreen component
+import DashboardScreen from './app/Dashboard';
 import { LinearGradient } from 'expo-linear-gradient';
+import GradientText from './app/components/GradientText';
+
+// import { db } from './config';
+// import { ref, set } from 'firebase/database'
 
 const Stack = createStackNavigator();
 
@@ -35,22 +39,29 @@ export default function App() {
 }
 
 function HomeScreen({ navigation, darkMode, toggleDarkMode }) {
+  // const [text, setText] = useState(1)
 
   const handlePress = () => {
+    // set(ref(db, 'sensor_data'), { // TRY LANG TO MAGSEND MOCK DATA SA REALTIME
+    //   humidity: 30,
+    //   temperature: 32.3
+    // })
     navigation.navigate('Dashboard');
   };
 
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? '#1d1d1f' : '#fff' }]}>
-      <Text style={[styles.title, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>TempHum Pro</Text>
+      {darkMode ? <GradientText style={[styles.title, {textAlign: 'center'}]}>TempHum Pro</GradientText> :
+      <Text style={[styles.title, { color: '#1d1d1f' }]}>TempHum Pro</Text>}
       <Image
         source={require('./assets/sunCloud.png')}
         style={styles.image}
       />
-      <Text style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of your day by checking our Temperature and Humidity App</Text>
+
+      <Text style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of youdjasjkdakdr day by checking our Temperature and Humidity App</Text>
       <TouchableOpacity onPress={handlePress}>
         <LinearGradient
-          colors={['#0FE687', '#1ABBD5']} // Gradient colors for the button
+          colors={['#0FE687', '#1ABBD5']}
           start={{ x: 1, y: 0.5 }}
           end={{ x: 0, y: 0.5 }}
           style={styles.buttonGradient}

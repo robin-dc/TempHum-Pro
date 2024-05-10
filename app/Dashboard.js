@@ -1,25 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useState, useEffect } from 'react';
+import { db } from '../config';
+import { ref, onValue } from 'firebase/database'
+import GradientText from './components/GradientText';
 
 export default function Dashboard({ darkMode, toggleDarkMode }) {
+  const [data, setData] = useState({})
 
+  useEffect(()=> {
+    const starCountRef = ref(db, 'sensor_data')
+    onValue(starCountRef, (snapshot) => {
+      const data = snapshot.val();
+      setData(data)
+    })
+  }, [])
 
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? '#1d1d1f' : '#fff' }]}>
 
-      <Text style={[styles.title, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>TempHum Pro</Text>
+      {darkMode ?
+        <GradientText style={styles.title}>TempHum Pro</GradientText> :
+        <Text style={[styles.title, { color: '#1d1d1f' }]}>TempHum Pro</Text>
+      }
       <Text  style={[styles.p, { color: darkMode ? '#FFF' : '#1d1d1f' }]}>Take care of your day by checking our Temperature and Humidity App</Text>
         <View style={styles.wrapper}>
             <LinearGradient
-                colors={['#0FE687', '#1ABBD5']} // Gradient colors for the button
+                colors={['#0FE687', '#1ABBD5']}
                 start={{ x: 1, y: 0.5 }}
                 end={{ x: 0, y: 0.5 }}
                 style={styles.innerContainer}
             >
                 <View>
                     <Text style={styles.subtitle}>Temperature</Text>
-                    <Text style={styles.temp}>36C</Text>
+                    <Text style={styles.temp}>{data?.temperature}°C</Text>
                     <Text style={styles.subtext}>The recorded temperature is within normal range. Have a great day!</Text>
                 </View>
                 <Image
@@ -28,14 +43,14 @@ export default function Dashboard({ darkMode, toggleDarkMode }) {
                 />
             </LinearGradient>
             <LinearGradient
-                colors={['#0FE687', '#1ABBD5']} // Gradient colors for the button
+                colors={['#0FE687', '#1ABBD5']}
                 start={{ x: 1, y: 0.5 }}
                 end={{ x: 0, y: 0.5 }}
                 style={styles.innerContainer}
             >
                 <View>
                 <Text style={styles.subtitle}>Humidity</Text>
-                    <Text style={styles.temp}>57%</Text>
+                    <Text style={styles.temp}>{data?.humidity}%</Text>
                     <Text style={styles.subtext}>The recorded humidity is within normal range. Have a great day!</Text>
                 </View>
                 <Image
