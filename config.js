@@ -4,7 +4,7 @@ import firebase from 'firebase/compat/app';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyD-d1QQG5DKqIHFg6CCpRzKDnaPiXmL35c",
+  apiKey: process.env.API_KEY,
   authDomain: "temphum-pro.firebaseapp.com",
   databaseURL: "https://temphum-pro-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "temphum-pro",
